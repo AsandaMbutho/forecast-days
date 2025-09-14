@@ -43,6 +43,7 @@ function searchCity(city) {
   let apiKey = "b2a5adcct04b33178913oc335f405433";
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}`;
   axios.get(apiUrl).then(refreshWeather);
+  getForecast(city);
 }
 
 function handleSearchSubmit(event) {
@@ -51,7 +52,15 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-function displayForecast() {
+function getForecast(city) {
+  let apiKey = "456810c6900409c37c77d426948bf2a";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
+  console.log(response.data);
+
   let days = ["Tue", "Wed", "Thu", "Fri", "Sat"];
   let forecastHtml = "";
 
@@ -80,4 +89,3 @@ let searchFormElement = document.querySelector(".weather-forecast");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("Durban");
-displayForecast();
